@@ -1,3 +1,4 @@
+
 import java.io.*;
 import java.io.FileInputStream;
 
@@ -180,6 +181,7 @@ public int getEpisodes(){
     }
 
     public void ler(String endereco) throws Exception{
+        
         InputStreamReader irs =  new InputStreamReader(new FileInputStream(endereco));
         BufferedReader br =  new BufferedReader(irs);
 
@@ -199,8 +201,7 @@ try{
         while(!br.readLine().contains("País de origem"));
         this.paisDeOrigem=removetags(br.readLine());
 
-        while(!br.readLine().contains("País de origem"));
-            this.paisDeOrigem = removetags(br.readLine());
+
 
             //set idioma da série
             while(!br.readLine().contains("Idioma original"));
@@ -247,7 +248,7 @@ public static void main(String[] args)throws Exception {
     do {
        entrada[numEntrada] = MyIO.readLine();    
        classe.ler(entrada[numEntrada]);
-           classe.imprimir();
+           
           
 
     } while (isFim(entrada[numEntrada++]) == false);
