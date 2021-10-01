@@ -253,15 +253,6 @@ try{
                 System.out.println("Error reading file '" + endereco + "'");
             }
         }
-
-
-
-
-    
-
-
-
-    
    
 
 }
