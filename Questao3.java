@@ -253,6 +253,15 @@ try{
                 System.out.println("Error reading file '" + endereco + "'");
             }
         }
+
+
+
+
+    
+
+
+
+    
    
 
 }
@@ -270,14 +279,17 @@ public class Questao3{
         boolean resp = false;
         int n = series.length;
         
+        
+        
         for(int i = 0;i < n; i++){
-           
-         
+            
+            
             if(nome.equals(series[i].getnome()) ){ 
                 resp = true;
                 i = n;
             }
         }
+        
         return resp;
     }
 
@@ -327,4 +339,6 @@ public class Questao3{
     }   
              
     
+        
+
         
