@@ -1,10 +1,8 @@
-import java.io.IOException;
 import java.io.*;
 import java.io.FileInputStream;
 
-
-class Series { // declaracao de atributos
-
+       
+ class Series { // declaracao de atributos
     private String nome;
     private String formato;
     private String duracao;
@@ -140,9 +138,8 @@ public int getEpisodes(){
 
     }
 
-    public String imprimirNOME(){
-        return this.nome;
-    }
+
+
 
 ////// tratamento de dados ///////////////////////////////////////////////////
  //método para tratar a linha, deixar apenas números e converter o retorno de String para Integer
@@ -181,24 +178,6 @@ public int getEpisodes(){
         //System.out.println(resp);
         return resp;
     }
-
-    public String lerNOME(String endereco) throws Exception{
-        
-        InputStreamReader irs =  new InputStreamReader(new FileInputStream(endereco));
-        BufferedReader br =  new BufferedReader(irs);
-
-
-
-        //nome
-        while(!br.readLine().contains("<table class=\"infobox_v2\""));
-        br.readLine();
-        this.nome=removetags(br.readLine());
-        this.imprimirNOME();
-        br.close();
-        return this.nome;
-        
-    }
-
 
     public void ler(String endereco) throws Exception{
         
@@ -243,7 +222,7 @@ try{
             while(!br.readLine().contains("N.º de episódios"));
             this.numEp = justInt(removetags(br.readLine()));
 
-          // NAO PRECISA IMPRIMIR  this.imprimir();
+            //this.imprimir();
 
             br.close();         
             //Tratamento de exceções
@@ -254,15 +233,43 @@ try{
             }
         }
 
+    }
 
 
 
+class Lista {
+    private Series[] array;
+    private int n;
+
+    public Lista(){
+        this(100);
     
+    }
+
+    public Lista (int tam){
+        array = new Series[tam];
+        n=0;
+    }
 
 
+    public void inserirFim (Series classe) throws Exception{
+        if (n>=array.length){
+            throw new Exception("Erro ao inserir");
+        }
+        array[n] = classe;
+        n++;
+    }
 
-    
-   
+    public void mostrar(){
+        for(int i=0 ; i<n ;i++){
+            MyIO.print("["+i+"] ## ");
+            MyIO.print(array[i].getnome() + " ## ");
+            MyIO.println("");
+            
+        }
+
+}
+
 
 }
 
@@ -271,74 +278,53 @@ try{
 
 
 
-public class Questao3{
 
+public class Thiago {
 
+    public static Series lerDados(String entrada)throws Exception{
+        Series classe = new Series();
+        classe.ler(entrada);
 
-    public static boolean pesquisaSequencial(String nome, int numSeries, Series[] series){
-        boolean resp = false;
-        int n = series.length;
-        
-        
-        
-        for(int i = 0;i < n; i++){
-            
-            
-            if(nome.equals(series[i].getnome()) ){ 
-                resp = true;
-                i = n;
-            }
-        }
-        
-        return resp;
+        return classe;
     }
+
 
 
     public static boolean isFim(String s) {
-        return (s.length() >= 3 && s.charAt(0) == 'F' && s.charAt(1) == 'I' && s.charAt(2) == 'M');
-    }
-    
+    return (s.length() >= 3 && s.charAt(0) == 'F' && s.charAt(1) == 'I' && s.charAt(2) == 'M');
+}
     public static void main(String[] args)throws Exception {
-        
-        String[] endereco = new String[1000];
-        String[] entrada2 = new String[1000];
-        
-        int numEntrada1 = 0;
-        int numEntrada2 = 0;	
-       
+        Lista lista = new Lista();
+        String[] entrada = new String[1000];
+        String[] entrada2= new String[1000];
+        int numEntrada = 0;
+        int numEntrada2 = 0;
+
+
     
-        //le primeira parte das entradas
-    do {
-        endereco[numEntrada1] = MyIO.readLine();
-    } while (isFim(endereco[numEntrada1++]) == false);
-    numEntrada1--; // DESCONSIDERAR "FIM"
+        do {
+           entrada[numEntrada] = MyIO.readLine(); 
+           //lista.inserirFim(lerDados(entrada[numEntrada])); 
 
-    Series[] series = new Series[numEntrada1];
-        for(int i=0; i<numEntrada1;i++){
-        series[i].ler(endereco[i]);
-        }  
+        } while (isFim(entrada[numEntrada++]) == false);
+             numEntrada--;  
 
-    //novas
-    do {
-        entrada2[numEntrada2] = MyIO.readLine();
-    } while (isFim(entrada2[numEntrada2++]) == false );
-    numEntrada2--; // DESCONSIDERAR "FIM"
 
-         
-
-        for (int i=0;i<numEntrada2;i++){
-            if(pesquisaSequencial(entrada2[i], numEntrada2, series)== true){
-                MyIO.println("SIM");
-              } else {
-                  MyIO.println("NAO");
-              }
+            for (int i=0;i<numEntrada;i++){
+                lista.inserirFim(lerDados(entrada[i]));
             }
-        }
+
+
+        do {
+            entrada2[numEntrada2++] = MyIO.readLine();
+        } while (isFim(entrada2[numEntrada2++])==false);
+            numEntrada2--;
+
+            
+
+            //lista.mostrar();
+        } // ultima chave main
+
 
     
-    }   
-             
-    
-        
-
-        
+}
