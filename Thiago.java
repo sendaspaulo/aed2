@@ -181,7 +181,7 @@ public int getEpisodes(){
 
     public void ler(String endereco) throws Exception{
         
-        InputStreamReader irs =  new InputStreamReader(new FileInputStream(endereco));
+        InputStreamReader irs =  new InputStreamReader(new FileInputStream("/tmp/series/" + endereco));
         BufferedReader br =  new BufferedReader(irs);
 
 try{
@@ -251,6 +251,13 @@ class Lista {
         n=0;
     }
 
+    public Series[] getArray(){
+        return this.array;
+    }
+
+    public int getN(){
+        return this.n;
+    }
 
     public void inserirFim (Series classe) throws Exception{
         if (n>=array.length){
@@ -281,6 +288,30 @@ class Lista {
 
 public class Thiago {
 
+    public static void PesquisaSequencial(Lista lista, String entrada2){
+
+        Series array[] = lista.getArray();
+        int n= lista.getN();
+        boolean estaNaLista = false;
+        int i = 0;
+        while(i < n && estaNaLista == false){
+           // MyIO.println(""+array[i].getnome()+"=="+entrada2);
+            if (array[i].getnome().contains(entrada2)){
+                estaNaLista = true;
+            }
+            i++;
+            
+        }
+
+        if (estaNaLista == true){
+            MyIO.println("SIM");
+        }else 
+            MyIO.println("NÃO");
+       
+
+    }
+
+
     public static Series lerDados(String entrada)throws Exception{
         Series classe = new Series();
         classe.ler(entrada);
@@ -294,6 +325,10 @@ public class Thiago {
     return (s.length() >= 3 && s.charAt(0) == 'F' && s.charAt(1) == 'I' && s.charAt(2) == 'M');
 }
     public static void main(String[] args)throws Exception {
+        
+        MyIO.setCharset("UTF-8");
+
+
         Lista lista = new Lista();
         String[] entrada = new String[1000];
         String[] entrada2= new String[1000];
@@ -314,14 +349,20 @@ public class Thiago {
                 lista.inserirFim(lerDados(entrada[i]));
             }
 
-
+            
+            
         do {
-            entrada2[numEntrada2++] = MyIO.readLine();
+            entrada2[numEntrada2] = MyIO.readLine();
         } while (isFim(entrada2[numEntrada2++])==false);
             numEntrada2--;
 
             
 
+            for (int i = 0; i < numEntrada2; i++) {
+            
+                PesquisaSequencial(lista,entrada2[i]);
+            } 
+            
             //lista.mostrar();
         } // ultima chave main
 
